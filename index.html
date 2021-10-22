@@ -8,7 +8,8 @@
 </head>
 <body>
     <div id="app">
-        <input name="search" placeholder="Search tasks.."/> <hr  />
+        {{ state.filtered }}
+        <input v-model="state.search" @keyup="searchTask" name="search" placeholder="Search tasks.."/> <hr  />
         
         <ul>
             <li v-for="task in state.tasks" :key="task.id">

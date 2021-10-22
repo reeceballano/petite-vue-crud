@@ -7,7 +7,8 @@ const state = reactive({
         { id: 3, name: 'Task 3', status: true },
     ],
 
-    task: {}
+    task: {},
+    search: '',
 })
 
 const addTask = () => {
@@ -21,14 +22,20 @@ const addTask = () => {
     state.tasks.push({ ...task });
 }
 
+const refTasks = [...state.tasks];
+
 const removeTask = (id) => {
     const tasks = [...state.tasks].filter(i => i.id !== id);
     state.tasks = tasks;
 }
 
-const searchTask = (task) => {
-    const tasks = [...state.tasks].contains(task);
-    console.log(tasks)
+const searchTask = () => {
+    if (state.search.length) {
+        const tasks = [...state.tasks].filter(t => t.name.toLowerCase().includes(state.search.toLowerCase()));
+        state.tasks = [...tasks];
+    } else {
+        state.tasks = refTasks;
+    }
 }
 
 createApp({
