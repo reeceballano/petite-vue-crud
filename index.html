@@ -8,12 +8,15 @@
 </head>
 <body>
     <div id="app">
-        <button @click="addTask()">Add Task</button>
+        <input name="search" placeholder="Search tasks.."/> <hr  />
+        
         <ul>
             <li v-for="task in state.tasks" :key="task.id">
                 {{ task.name }} <a @click.prevent="removeTask(task.id)" href="#">x</a>
             </li>
         </ul>
+
+        <button @click="addTask()">Add Task</button>
     </div>
 
     <script src="src/app.js" defer type="module"></script>
