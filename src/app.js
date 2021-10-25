@@ -1,15 +1,19 @@
-import { createApp, reactive } from 'https://unpkg.com/petite-vue?module'
+import { createApp, reactive } from 'https://unpkg.com/petite-vue?module';
+import Repository from './repository/RepositoryFactory.js';
+
+const TaskRepository = Repository.get('tasks');
+
 
 const state = reactive({
-    tasks: [
-        { id: 1, name: 'Task 1', status: false },
-        { id: 2, name: 'Task 2', status: false },
-        { id: 3, name: 'Task 3', status: true },
-    ],
-
+    tasks: [],
     task: {},
     search: '',
 })
+
+const fetchTasks = async () => {
+    const { response } = await TaskRepository.get();
+    state.tasks = response;
+}
 
 const addTask = () => {
     const d = new Date();
@@ -37,6 +41,12 @@ const searchTask = () => {
         state.tasks = refTasks;
     }
 }
+
+const init = () => {
+    fetchTasks();
+}
+
+init();
 
 createApp({
     state,
