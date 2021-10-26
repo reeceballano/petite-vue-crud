@@ -8,11 +8,13 @@ const state = reactive({
     tasks: [],
     task: {},
     search: '',
+    filtered: [],
 })
 
 const fetchTasks = async () => {
     const { response } = await TaskRepository.get();
-    state.tasks = response;
+    state.tasks = [...response];
+    //state.filtered = state.tasks
 }
 
 const addTask = () => {
@@ -26,8 +28,6 @@ const addTask = () => {
     state.tasks.push({ ...task });
 }
 
-const refTasks = [...state.tasks];
-
 const removeTask = (id) => {
     const tasks = [...state.tasks].filter(i => i.id !== id);
     state.tasks = tasks;
@@ -35,10 +35,12 @@ const removeTask = (id) => {
 
 const searchTask = () => {
     if (state.search.length) {
+        state.filtered = [...state.tasks];
+
         const tasks = [...state.tasks].filter(t => t.name.toLowerCase().includes(state.search.toLowerCase()));
-        state.tasks = [...tasks];
+        state.tasks = tasks;
     } else {
-        state.tasks = refTasks;
+        state.tasks = state.filtered;
     }
 }
 
