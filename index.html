@@ -9,15 +9,22 @@
 </head>
 <body>
     <div id="app">
-        <input v-model="state.search" @keyup="searchTask" name="search" placeholder="Search tasks.."/> <hr  />
+        <section class="p-5">
+            <div class="w-11/12 md:w-10/12 m-auto">
+                <input v-model="state.search" @keyup="searchTask" name="search" placeholder="Search tasks.."/>
+            </div>
+        </section>
         
-        <ul>
-            <li v-for="task in state.tasks" :key="task.id">
-                {{ task.name }} <a @click.prevent="removeTask(task.id)" href="#">x</a>
-            </li>
-        </ul>
-
-        <button @click="addTask()">Add Task</button>
+        <section class="p-5">
+            <div class="w-11/12 md:w-10/12 m-auto">
+                <ul>
+                    <li v-for="task in state.tasks" :key="task.id">
+                        {{ task.name }} <a @click.prevent="removeTask(task.id)" href="#">x</a>
+                    </li>
+                </ul>
+                <button @click="addTask()">Add Task</button>
+            </div>
+        </section>
     </div>
 
     <script src="src/app.js" defer type="module"></script>
