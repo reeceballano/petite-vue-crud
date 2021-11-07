@@ -19,7 +19,7 @@
             <div class="w-11/12 md:w-10/12 m-auto">
                 <ul>
                     <li v-for="task in state.tasks" :key="task.id">
-                        {{ task.name }} <a @click.prevent="removeTask(task.id)" href="#">x</a>
+                        {{ task.name }} <a class="inline-block w-5 h-5 rounded-full inline-flex items-center justify-center p-0 text-xs text-white bg-red-500 hover:bg-red-600" @click.prevent="removeTask(task.id)" href="#">x</a>
                     </li>
                 </ul>
                 <button class="bg-blue-300 px-4 py-1 text-white rounded" @click="addTask()">Add Task</button>
