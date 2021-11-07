@@ -33,6 +33,17 @@ const removeTask = (id) => {
     state.tasks = tasks;
 }
 
+const updateTask = (task) => {
+    const { id, name, status } = task;
+    const tasks = [...state.tasks].find(i => i.id === id);
+
+    if(tasks) {
+        console.log(tasks);
+        tasks.name = name;
+        tasks.status = status;
+    }
+}
+
 const searchTask = () => {
     if (state.search.length) {
         state.filtered = [...state.tasks];
@@ -55,4 +66,5 @@ createApp({
     addTask,
     removeTask,
     searchTask,
+    updateTask,
 }).mount('#app');
