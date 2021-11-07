@@ -6,14 +6,25 @@ const TaskRepository = Repository.get('tasks');
 
 const state = reactive({
     tasks: [],
-    task: {},
+    task: {
+        id: '',
+        name: '',
+        status: false,
+    },
     search: '',
     filtered: [],
+    showEdit: false,
 })
 
 const fetchTasks = async () => {
     const { response } = await TaskRepository.get();
-    state.tasks = [...response];
+    let newResponse = [...response];
+
+    newResponse.map(item => {
+        item.editing = false
+    })
+
+    state.tasks = newResponse;
     //state.filtered = state.tasks
 }
 
@@ -33,14 +44,24 @@ const removeTask = (id) => {
     state.tasks = tasks;
 }
 
+const preUpdateTask = (task) => {
+    const { id, name, status } = task;
+    const tasks = [...state.tasks].find(i => i.id === id);
+    if(tasks) {
+        task.editing = true;
+        state.showEdit = true;
+        state.task = task;
+    }
+
+}
+
 const updateTask = (task) => {
     const { id, name, status } = task;
     const tasks = [...state.tasks].find(i => i.id === id);
-
+    
     if(tasks) {
-        console.log(tasks);
-        tasks.name = name;
-        tasks.status = status;
+        task.editing = false;
+        state.showEdit = false;
     }
 }
 
@@ -67,4 +88,5 @@ createApp({
     removeTask,
     searchTask,
     updateTask,
+    preUpdateTask
 }).mount('#app');
