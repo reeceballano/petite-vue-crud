@@ -21,7 +21,7 @@
                 <ul>
                     <li @click="preUpdateTask(task)" class="my-2 py-2 border-b border-gray-100" v-for="task in state.tasks" :key="task.id">
                         {{ task.name }} <a class="inline-block w-5 h-5 rounded-full inline-flex items-center justify-center p-0 text-xs text-white bg-red-500 hover:bg-red-600" @click.prevent="removeTask(task.id)" href="#">x</a>
-                        <input class="edit-input" v-show="task.editing" type="text" v-model="state.task.name" @keyup.enter="updateTask(task)" @blur="updateTask(task)"/>
+                        <input class="edit-input px-3" v-show="task.editing" type="text" v-model="state.task.name" @keyup.enter="updateTask(task)" @blur="updateTask(task)"/>
                     </li>
                 </ul>
                 <button class="bg-blue-300 px-4 py-1 text-white rounded" @click="addTask()">Add Task</button>
