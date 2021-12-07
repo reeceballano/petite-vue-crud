@@ -47,10 +47,15 @@ const removeTask = (id) => {
 const preUpdateTask = (task) => {
     const { id, name, status } = task;
     const tasks = [...state.tasks].find(i => i.id === id);
+    
     if(tasks) {
         task.editing = true;
         state.showEdit = true;
         state.task = task;
+        setTimeout(() => {
+            const editInput = document.querySelector('.edit-input');
+            editInput.focus();
+        },10);
     }
 
 }
