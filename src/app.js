@@ -14,6 +14,7 @@ const state = reactive({
     search: '',
     filtered: [],
     showEdit: false,
+    click: 0
 })
 
 const fetchTasks = async () => {
@@ -44,20 +45,31 @@ const removeTask = (id) => {
     state.tasks = tasks;
 }
 
+const detectDoubleClick = () => {
+    state.click++;
+    setTimeout(() => {
+        state.click = 0;
+    },200);
+}
+
 const preUpdateTask = (task) => {
+    detectDoubleClick();
+
     const { id, name, status } = task;
     const tasks = [...state.tasks].find(i => i.id === id);
-    
-    if(tasks) {
-        task.editing = true;
-        state.showEdit = true;
-        state.task = task;
-        setTimeout(() => {
-            const editInput = document.querySelector('.edit-input');
-            editInput.focus();
-        },10);
-    }
 
+    // CHECK IF DOUBLE DETECTED THEN SHOW EDIT INPUT
+    if(state.click === 2) {
+        if(tasks) {
+            task.editing = true;
+            state.showEdit = true;
+            state.task = task;
+            setTimeout(() => {
+                const editInput = document.querySelector('.edit-input');
+                editInput.focus();
+            },10);
+        }    
+    }
 }
 
 const updateTask = (task) => {
@@ -93,5 +105,6 @@ createApp({
     removeTask,
     searchTask,
     updateTask,
-    preUpdateTask
+    preUpdateTask,
+    detectDoubleClick
 }).mount('#app');
